@@ -1,0 +1,3 @@
+- [x] Add slides-wrapper div in student_list.html around the slides
+- [x] Update CSS in style.css for sliding animation
+- [x] Modify JavaScript in student_list.html to use transform for sliding

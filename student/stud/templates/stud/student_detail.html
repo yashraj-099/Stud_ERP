@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Student Detail{% endblock %}
+{% block content %}
+<h1>Student Detail</h1>
+
+<div class="student-detail-card">
+    <div class="student-info">
+        <p><strong>ID:</strong> {{ object.id }}</p>
+        <p><strong>Name:</strong> {{ object.name }}</p>
+        <p><strong>Email:</strong> {{ object.email }}</p>
+        <p><strong>Password:</strong> {{ object.password }}</p>
+        <p><strong>Age:</strong> {{ object.age }}</p>
+        <p><strong>Course:</strong> {{ object.course }}</p>
+        <p><strong>attendance:</strong> {{ object.attendance }}</p>
+        <p><strong>results:</strong> {{ object.results }}</p>
+
+    </div>
+
+    {% if object.profile_pic %}
+        <div class="profile-pic">
+            <img src="{{ object.profile_pic.url }}" alt="Profile Picture"/>
+        </div>
+    {% endif %}
+
+    <div class="actions">
+        <a href="{% url 'stud:student-edit' object.pk %}" onclick="alert('Editing student');" class="btn btn-primary">Edit</a>
+        <a href="{% url 'stud:student-delete' object.pk %}" onclick="alert('Deleting student');" class="btn btn-danger">Delete</a>
+        <a href="{% url 'stud:student-list' %}" onclick="alert('Going back to list');" class="btn btn-secondary">Back to list</a>
+    </div>
+</div>
+{% endblock %}

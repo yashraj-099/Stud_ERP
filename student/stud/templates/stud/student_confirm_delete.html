@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Confirm Delete{% endblock %}
+{% block content %}
+<h1>Confirm Delete</h1>
+<div class="delete-confirmation">
+    <p>Are you sure you want to delete <strong>{{ student.name }}</strong>?</p>
+    <form method="post" onsubmit="return confirm('Are you sure you want to delete {{ student.name }}?')">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger" onclick="alert('Are you sure you want to delete {{ student.name }}?');">Yes, Delete</button>
+        <a href="{% url 'stud:student-list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

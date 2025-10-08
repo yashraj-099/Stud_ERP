@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load tz %}
+{% block title %}Students{% endblock %}
+{% block content %}
+<!-- Daily Blogs Slideshow -->
+<div class="blogs-slideshow">
+    <div class="slideshow-container">
+        <div class="slides-wrapper">
+            <div class="slide active">
+                <h2>Daily Blog 1</h2>
+                <p>Welcome to our student management system. Stay updated with the latest news and announcements.</p>
+                <p>Date: {{ today|date:"F j, Y" }}</p>
+                <h5>Author: Admin Student Portal</h5>
+                <h5>Contact: 8789456123 , 7722-0896</h5>
+                <h5>Email: Admin@studentportal.com</h5>
+            </div>
+            <div class="slide">
+                <h2>Daily Blog 2</h2>
+                <p>Important updates about course registrations and deadlines. Make sure to check your email regularly.</p>
+                <p>Date: {{ today|date:"F j, Y" }}</p>
+                <h5>Author: Admin Student Portal</h5>
+                <h5>Contact: 8789456123 , 7722-0896</h5>
+                <h5>Email: Admin@studentportal.com</h5>
+            </div>
+            <div class="slide">
+                <h2>Daily Blog 3</h2>
+                <p>Tips for success: Time management and study habits that work. Join our study groups for better results.</p>
+                <p>Date: {{ today|date:"F j, Y" }}</p>
+                <h5>Author: Admin Student Portal</h5>
+                <h5>Contact: 8789456123 , 7722-0896</h5>
+                <h5>Email: Admin@studentportal.com</h5>
+            </div>
+            <div class="slide">
+                <h2>Daily Blog 4</h2>
+                <p>Upcoming events: Career fairs, workshops, and seminars. Don't miss out on these opportunities.</p>
+                <p>Date: {{ today|date:"F j, Y" }}</p>
+                <h5>Author: Admin Student Portal</h5>
+                <h5>Contact: 8789456123 , 7722-0896</h5>
+                <h5>Email: Admin@studentportal.com</h5>
+            </div>
+        </div>
+    </div>
+    <div class="slideshow-dots">
+        <span class="dot active" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+    </div>
+</div>
+
+<!-- Students Section -->
+<div class="students-section">
+    <h1>Students</h1>
+    <div class="add-student">
+        <a href="{% url 'stud:student-add' %}" class="btn btn-primary" onclick="alert('You Want to add a new student');">Add Student</a>
+    </div>
+    <div class="student-list">
+        {% for s in students %}
+            <div class="student-item">
+                <div class="student-name">
+                    <a href="{% url 'stud:student-detail' s.pk %}">{{ s.name }}</a>
+                </div>
+                <div class="student-actions">
+                    <a href="{% url 'stud:student-edit' s.pk %}" class="btn btn-secondary" onclick="alert('You want to edit this student');">Edit</a>
+                    <a href="{% url 'stud:student-delete' s.pk %}" class="btn btn-danger" onclick="alert('You are Deleting student');">Delete</a>
+                </div>
+            </div>
+        {% empty %}
+            <p class="no-students">No students yet.</p>
+        {% endfor %}
+    </div>
+</div>
+
+# Slideshow Script -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    let slideIndex = 0;
+    const slides = document.querySelectorAll(".slide");
+    const dots = document.querySelectorAll(".dot");
+    const slidesWrapper = document.querySelector(".slides-wrapper");
+
+    function updateSlidePosition() {
+        slidesWrapper.style.transform = `translateX(-${slideIndex * 100}%)`;
+        dots.forEach(dot => dot.classList.remove("active"));
+        dots[slideIndex].classList.add("active");
+    }
+
+    function currentSlide(n) {
+        slideIndex = n - 1;
+        updateSlidePosition();
+        resetAutoSlide();
+    }
+
+    window.currentSlide = currentSlide;
+
+    // Auto-slide
+    let autoSlideInterval = setInterval(nextSlide, 4000);
+
+    function nextSlide() {
+        slideIndex = (slideIndex + 1) % slides.length;
+        updateSlidePosition();
+    }
+
+    function resetAutoSlide() {
+        clearInterval(autoSlideInterval);
+        autoSlideInterval = setInterval(nextSlide, 4000);
+    }
+
+    updateSlidePosition();
+});
+
+</script>
+{% endblock %}
